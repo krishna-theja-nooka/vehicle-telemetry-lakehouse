@@ -1,0 +1,74 @@
+version: 2
+models:
+  - name: dim_vehicle
+    columns:
+      - name: vehicle_sk
+        tests: [not_null, unique]
+  - name: dim_date
+    columns:
+      - name: date_key
+        tests: [not_null, unique]
+  - name: fact_trip
+    columns:
+      - name: event_id
+        tests: [not_null, unique]
+      - name: vehicle_sk
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_vehicle')
+              field: vehicle_sk
+      - name: date_key
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_date')
+              field: date_key
+  - name: fact_charging
+    columns:
+      - name: event_id
+        tests: [not_null, unique]
+      - name: vehicle_sk
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_vehicle')
+              field: vehicle_sk
+      - name: date_key
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_date')
+              field: date_key
+  - name: fact_maintenance
+    columns:
+      - name: event_id
+        tests: [not_null, unique]
+      - name: vehicle_sk
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_vehicle')
+              field: vehicle_sk
+      - name: date_key
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_date')
+              field: date_key
+  - name: fact_toll
+    columns:
+      - name: event_id
+        tests: [not_null, unique]
+      - name: vehicle_sk
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_vehicle')
+              field: vehicle_sk
+      - name: date_key
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_date')
+              field: date_key

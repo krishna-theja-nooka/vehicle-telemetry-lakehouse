@@ -1,0 +1,11 @@
+{
+  "seed": 42,
+  "vehicles": 24,
+  "days": 7,
+  "raw_lines": 2898,
+  "exact_duplicates": 3,
+  "invalid_records": 5,
+  "revision_updates": 1,
+  "expected_silver_events": 2889,
+  "synthetic": true
+}

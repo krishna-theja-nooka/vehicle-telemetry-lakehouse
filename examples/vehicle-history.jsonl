@@ -1,0 +1,2 @@
+{"battery_capacity_kwh": 90.0, "model": "Orion Shuttle", "region": "Austin", "valid_from": "2026-01-01T00:00:00Z", "valid_to": "2026-10-04T00:00:00Z", "vehicle_id": "EV-004", "vehicle_sk": "EV-004-v1"}
+{"battery_capacity_kwh": 90.0, "model": "Orion Shuttle", "region": "Denver", "valid_from": "2026-10-04T00:00:00Z", "valid_to": "2099-01-01T00:00:00Z", "vehicle_id": "EV-004", "vehicle_sk": "EV-004-v2"}

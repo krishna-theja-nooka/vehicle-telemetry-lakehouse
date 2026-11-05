@@ -1,0 +1,9 @@
+name: fleet_analytics
+version: '1.0.0'
+config-version: 2
+profile: fleet
+model-paths: [models]
+test-paths: [tests]
+models:
+  fleet_analytics:
+    +materialized: table

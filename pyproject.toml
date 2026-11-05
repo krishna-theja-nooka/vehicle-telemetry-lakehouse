@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools>=80", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "vehicle-telemetry-lakehouse"
+version = "0.1.0"
+description = "Synthetic EV telemetry: Spark, Delta Lake, dbt, and fleet analytics"
+requires-python = ">=3.12,<3.13"
+dependencies = ["pyspark==3.5.3", "delta-spark==3.3.2", "duckdb==1.3.2", "pyarrow==20.0.0", "fastapi==0.115.12", "uvicorn==0.34.2", "pydantic==2.11.4", "dbt-duckdb==1.9.3", "dbt-core==1.9.4", "filelock==3.18.0"]
+
+[project.scripts]
+fleet = "fleet.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["fleet*"]
+
+[tool.setuptools.package-data]
+fleet = ["sql/*.sql", "static/*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = ["spark: integration tests requiring Java 17 and Delta Maven artifacts"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]

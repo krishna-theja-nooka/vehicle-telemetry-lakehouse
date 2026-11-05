@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Fleet Pulse | Telemetry Lakehouse</title>
+    <link rel="icon" href="/static/icon.svg" />
+    <link rel="stylesheet" href="/static/style.css" />
+    <script src="/static/app.js" defer></script>
+  </head>
+  <body>
+    <aside class="sidebar">
+      <a class="brand" href="/" aria-label="Fleet Pulse home"
+        ><span class="brand-icon">ϟ</span
+        ><span
+          >fleet<span class="brand-light">pulse</span
+          ><small>TELEMETRY INTELLIGENCE</small></span
+        ></a
+      >
+      <div class="workspace">
+        <span class="workspace-icon">F</span>
+        <div>Frontier Electric<small>Synthetic fleet workspace</small></div>
+        <span>⌄</span>
+      </div>
+      <p class="nav-label">WORKSPACE</p>
+      <nav>
+        <a class="active" href="#overview"
+          ><span>◫</span> Fleet overview <i>01</i></a
+        ><a href="#vehicles"><span>▤</span> Vehicle analytics</a
+        ><a href="#pipeline"><span>◇</span> Pipeline health</a
+        ><a href="/docs"><span>⌘</span> API explorer <i>↗</i></a>
+      </nav>
+      <div class="side-card">
+        <span class="status-dot"></span> Built on a lakehouse
+        <p>Raw signals.<br />Reliable decisions.</p>
+        <div class="tech-tags">
+          <span>PySpark</span><span>Delta Lake</span><span>dbt</span>
+        </div>
+      </div>
+      <div class="side-bottom">
+        <span class="avatar">FE</span>
+        <div>Portfolio workspace<small>100% synthetic data</small></div>
+      </div>
+    </aside>
+    <main id="overview">
+      <header class="topbar">
+        <div class="breadcrumb">
+          Workspace <span>/</span> <strong>Fleet overview</strong>
+        </div>
+        <div class="top-actions">
+          <span class="demo-pill"><span></span> SYNTHETIC DATA</span
+          ><a href="/docs" title="Explore API documentation">↗</a>
+        </div>
+      </header>
+      <div class="content">
+        <div class="page-heading">
+          <div>
+            <div class="eyebrow">THE BIG PICTURE</div>
+            <h1>Your fleet, in focus.</h1>
+            <p>Turn vehicle signals into a clearer view of your operations.</p>
+          </div>
+          <button id="refresh" class="button">↻ &nbsp; Refresh snapshot</button>
+        </div>
+        <div class="filterbar">
+          <div class="filter-group">
+            <label for="region">Operating region</label
+            ><select id="region">
+              <option value="All">All regions</option>
+              <option>Austin</option>
+              <option>Dallas</option>
+              <option>Denver</option>
+            </select>
+          </div>
+          <div class="date-range">
+            <span>▦</span> <span id="date-range">Loading snapshot…</span>
+          </div>
+          <span class="snapshot-label" id="snapshot-label"
+            >Connecting to analytics</span
+          >
+        </div>
+        <div id="error" class="error" hidden></div>
+        <section class="metrics" aria-label="Fleet key metrics">
+          <article class="metric">
+            <div>Active vehicles <span>▱</span></div>
+            <strong id="vehicles-kpi">—</strong>
+            <p>
+              <b class="green">Fleet coverage</b>
+              <span id="trip-total">— trips recorded</span>
+            </p>
+          </article>
+          <article class="metric">
+            <div>Distance traveled <span>↗</span></div>
+            <strong id="distance-kpi">—</strong>
+            <p><b class="green">km</b> Across completed trips</p>
+          </article>
+          <article class="metric">
+            <div>Energy efficiency <span>ϟ</span></div>
+            <strong id="efficiency-kpi">—</strong>
+            <p><b class="green">kWh / 100 km</b> Distance weighted</p>
+          </article>
+          <article class="metric">
+            <div>Recorded costs <span>$</span></div>
+            <strong id="cost-kpi">—</strong>
+            <p>Charging · maintenance · tolls</p>
+          </article>
+        </section>
+        <div class="chart-grid">
+          <section class="panel energy-panel">
+            <div class="panel-heading">
+              <div>
+                <h2>Energy on the move</h2>
+                <p>Daily trip consumption and charging energy</p>
+              </div>
+              <span class="subtle-badge">kWh</span>
+            </div>
+            <div class="legend">
+              <span class="legend-item"><i class="teal"></i>Consumed</span
+              ><span class="legend-item"><i class="pale"></i>Charged</span>
+            </div>
+            <div
+              id="energy-chart"
+              class="energy-chart"
+              role="img"
+              aria-label="Daily energy chart"
+            ></div>
+            <div class="chart-footer">
+              <span>Trip energy ÷ trip distance</span
+              ><strong>Measured at the event level ↗</strong>
+            </div>
+          </section>
+          <section class="panel network-panel">
+            <div class="panel-heading">
+              <div>
+                <h2>Operating footprint</h2>
+                <p>Historical vehicle activity by region</p>
+              </div>
+              <span class="network-icon" aria-hidden="true">◎</span>
+            </div>
+            <div
+              class="network-map"
+              aria-label="Schematic operating regions, not a GPS map"
+            >
+              <svg
+                viewBox="0 0 330 165"
+                role="img"
+                aria-label="Schematic links between Denver, Dallas and Austin"
+              >
+                <defs>
+                  <pattern
+                    id="dots"
+                    width="14"
+                    height="14"
+                    patternUnits="userSpaceOnUse"
+                  >
+                    <circle cx="2" cy="2" r="1" fill="#dce6e2" />
+                  </pattern>
+                </defs>
+                <rect width="330" height="165" fill="url(#dots)" />
+                <path
+                  d="M60 35 Q150 20 230 80 T200 140"
+                  fill="none"
+                  stroke="#aecbc1"
+                  stroke-width="2"
+                  stroke-dasharray="5 5"
+                />
+                <path
+                  d="M60 35 Q75 140 200 140"
+                  fill="none"
+                  stroke="#d4e2dc"
+                  stroke-width="2"
+                />
+                <g fill="#0c745e">
+                  <circle cx="60" cy="35" r="6" />
+                  <circle cx="230" cy="80" r="6" />
+                  <circle cx="200" cy="140" r="6" />
+                </g>
+                <g font-family="sans-serif" font-size="12" fill="#54625d">
+                  <text x="75" y="39">Denver</text>
+                  <text x="245" y="84">Dallas</text>
+                  <text x="215" y="144">Austin</text>
+                </g>
+              </svg>
+            </div>
+            <div id="regions" class="region-list"></div>
+            <p class="map-note">
+              Schematic network · not live vehicle positions
+            </p>
+          </section>
+        </div>
+        <section class="panel vehicle-panel" id="vehicles">
+          <div class="panel-heading">
+            <div>
+              <h2>The fleet at a glance</h2>
+              <p>
+                Historical alerts and latest battery reading in the selected
+                region
+              </p>
+            </div>
+            <div class="table-actions">
+              <label class="search-label"
+                ><span>⌕</span
+                ><input
+                  id="vehicle-search"
+                  placeholder="Find a vehicle…"
+                  aria-label="Search vehicle ID" /></label
+              ><button id="export" class="button small">
+                ↓ &nbsp; Export CSV
+              </button>
+            </div>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>VEHICLE</th>
+                  <th>REGION</th>
+                  <th>DISTANCE</th>
+                  <th>BATTERY</th>
+                  <th>EFFICIENCY</th>
+                  <th>ALERT EVENTS</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody id="vehicle-rows"></tbody>
+            </table>
+          </div>
+          <div class="table-footer">
+            <span id="table-count">Loading vehicles</span
+            ><span>Click a vehicle for its recent trips</span>
+          </div>
+        </section>
+        <section class="pipeline-card" id="pipeline">
+          <div class="pipeline-title">
+            <span class="pipeline-symbol">◇</span>
+            <div>
+              <h2>Trust starts with the data.</h2>
+              <p>
+                Every published snapshot passes validation before it reaches
+                this dashboard.
+              </p>
+            </div>
+            <span id="quality-badge" class="quality-badge"
+              >Awaiting snapshot</span
+            >
+          </div>
+          <div class="pipeline-flow">
+            <div>
+              <span class="layer bronze">B</span>
+              <p>Bronze<small>Unique raw payloads</small></p>
+              <strong id="bronze-count">—</strong>
+            </div>
+            <span class="flow-arrow">→</span>
+            <div>
+              <span class="layer silver">S</span>
+              <p>Silver<small>Validated latest events</small></p>
+              <strong id="silver-count">—</strong>
+            </div>
+            <span class="flow-arrow">→</span>
+            <div>
+              <span class="layer gold">G</span>
+              <p>Gold + dbt<small>Tested analytics tables</small></p>
+              <strong>7</strong>
+            </div>
+            <div class="quarantine">
+              <span>Quarantined</span><strong id="quarantine-count">—</strong
+              ><small>Preserved for investigation</small>
+            </div>
+          </div>
+          <div class="pipeline-meta">
+            <span id="run-id">Run —</span><span id="run-time">—</span>
+          </div>
+        </section>
+        <footer>
+          <span><strong>fleetpulse</strong> / VEHICLE TELEMETRY LAKEHOUSE</span
+          ><span>Built for insight. Engineered for trust.</span>
+        </footer>
+      </div>
+    </main>
+    <dialog id="trip-dialog">
+      <div class="dialog-heading">
+        <div>
+          <span class="eyebrow">VEHICLE DETAIL</span>
+          <h2 id="trip-title">Recent trips</h2>
+        </div>
+        <button id="close-dialog" aria-label="Close trip details">×</button>
+      </div>
+      <p>Latest 100 trips across all regions in this published snapshot.</p>
+      <div id="trip-content"></div>
+    </dialog>
+  </body>
+</html>

@@ -1,0 +1,188 @@
+{
+  "bronze_unique_payloads": 2895,
+  "quarantined": 5,
+  "silver_events": 2889,
+  "superseded_revisions": 1,
+  "quality_pass_pct": 99.827,
+  "run_id": "20261105T013825-7f339411",
+  "mode": "batch",
+  "synthetic": true,
+  "delta_versions": {
+    "dim_vehicle": 0,
+    "dim_date": 0,
+    "fact_trip": 0,
+    "fact_charging": 0,
+    "fact_maintenance": 0,
+    "fact_toll": 0,
+    "fleet_daily": 0
+  },
+  "duration_seconds": 50.44,
+  "published_at": "2026-11-05T01:39:15.824107+00:00",
+  "fleet_metrics": {
+    "vehicles": 24,
+    "trips": 504,
+    "distance_km": 26069.689999999984,
+    "consumed_kwh": 5600.783999999999,
+    "cost_usd": 5787.6
+  },
+  "source_lines": 2898,
+  "dbt_results": [
+    {
+      "node": "model.fleet_analytics.dim_date",
+      "status": "success"
+    },
+    {
+      "node": "model.fleet_analytics.dim_vehicle",
+      "status": "success"
+    },
+    {
+      "node": "model.fleet_analytics.fact_charging",
+      "status": "success"
+    },
+    {
+      "node": "model.fleet_analytics.fact_maintenance",
+      "status": "success"
+    },
+    {
+      "node": "model.fleet_analytics.fact_trip",
+      "status": "success"
+    },
+    {
+      "node": "model.fleet_analytics.fact_toll",
+      "status": "success"
+    },
+    {
+      "node": "test.fleet_analytics.not_null_dim_date_date_key.881d0a31b6",
+      "status": "pass"
+    },
+    {
+      "node": "model.fleet_analytics.mart_fleet",
+      "status": "success"
+    },
+    {
+      "node": "test.fleet_analytics.not_null_dim_vehicle_vehicle_sk.6d7138f57c",
+      "status": "pass"
+    },
+    {
+      "node": "test.fleet_analytics.unique_dim_date_date_key.0869fd48f9",
+      "status": "pass"
+    },
+    {
+      "node": "test.fleet_analytics.unique_dim_vehicle_vehicle_sk.32f2d4ae2b",
+      "status": "pass"
+    },
+    {
+      "node": "test.fleet_analytics.not_null_fact_charging_date_key.6707ac5e38",
+      "status": "pass"
+    },
+    {
+      "node": "test.fleet_analytics.valid_dimension_intervals",
+      "status": "pass"
+    },
+    {
+      "node": "test.fleet_analytics.not_null_fact_charging_event_id.ed10d0613d",
+      "status": "pass"
+    },
+    {
+      "node": "test.fleet_analytics.not_null_fact_charging_vehicle_sk.6cae795d51",
+      "status": "pass"
+    },
+    {
+      "node": "test.fleet_analytics.relationships_fact_charging_date_key__date_key__ref_dim_date_.c255b8169b",
+      "status": "pass"
+    },
+    {
+      "node": "test.fleet_analytics.relationships_fact_charging_vehicle_sk__vehicle_sk__ref_dim_vehicle_.117c35895f",
+      "status": "pass"
+    },
+    {
+      "node": "test.fleet_analytics.not_null_fact_maintenance_date_key.429d4bb311",
+      "status": "pass"
+    },
+    {
+      "node": "test.fleet_analytics.unique_fact_charging_event_id.332bcd1193",
+      "status": "pass"
+    },
+    {
+      "node": "test.fleet_analytics.not_null_fact_maintenance_event_id.4e793267d9",
+      "status": "pass"
+    },
+    {
+      "node": "test.fleet_analytics.not_null_fact_maintenance_vehicle_sk.fcb15072f2",
+      "status": "pass"
+    },
+    {
+      "node": "test.fleet_analytics.relationships_fact_maintenance_date_key__date_key__ref_dim_date_.f95361bde5",
+      "status": "pass"
+    },
+    {
+      "node": "test.fleet_analytics.relationships_fact_maintenance_vehicle_sk__vehicle_sk__ref_dim_vehicle_.ce39293525",
+      "status": "pass"
+    },
+    {
+      "node": "test.fleet_analytics.not_null_fact_trip_date_key.aac5896e18",
+      "status": "pass"
+    },
+    {
+      "node": "test.fleet_analytics.unique_fact_maintenance_event_id.a1efa90392",
+      "status": "pass"
+    },
+    {
+      "node": "test.fleet_analytics.not_null_fact_trip_event_id.9e5a85d674",
+      "status": "pass"
+    },
+    {
+      "node": "test.fleet_analytics.not_null_fact_trip_vehicle_sk.d98d746c76",
+      "status": "pass"
+    },
+    {
+      "node": "test.fleet_analytics.relationships_fact_trip_date_key__date_key__ref_dim_date_.ab071136a9",
+      "status": "pass"
+    },
+    {
+      "node": "test.fleet_analytics.relationships_fact_trip_vehicle_sk__vehicle_sk__ref_dim_vehicle_.625c1c7c9d",
+      "status": "pass"
+    },
+    {
+      "node": "test.fleet_analytics.not_null_fact_toll_date_key.cf4c510269",
+      "status": "pass"
+    },
+    {
+      "node": "test.fleet_analytics.unique_fact_trip_event_id.341fbacdb7",
+      "status": "pass"
+    },
+    {
+      "node": "test.fleet_analytics.not_null_fact_toll_event_id.577959b2d0",
+      "status": "pass"
+    },
+    {
+      "node": "test.fleet_analytics.not_null_fact_toll_vehicle_sk.cf7f7f0252",
+      "status": "pass"
+    },
+    {
+      "node": "test.fleet_analytics.relationships_fact_toll_date_key__date_key__ref_dim_date_.fb487324b2",
+      "status": "pass"
+    },
+    {
+      "node": "test.fleet_analytics.relationships_fact_toll_vehicle_sk__vehicle_sk__ref_dim_vehicle_.77c655786f",
+      "status": "pass"
+    },
+    {
+      "node": "test.fleet_analytics.reconcile_distance",
+      "status": "pass"
+    },
+    {
+      "node": "test.fleet_analytics.unique_fact_toll_event_id.b04cdd6065",
+      "status": "pass"
+    },
+    {
+      "node": "test.fleet_analytics.valid_daily_metrics",
+      "status": "pass"
+    },
+    {
+      "node": "test.fleet_analytics.unique_daily_grain",
+      "status": "pass"
+    }
+  ],
+  "note": "Observed synthetic local run; not a throughput benchmark or cloud result."
+}
