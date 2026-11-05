@@ -55,8 +55,20 @@ jobs:
         run: |
           docker build --label "org.opencontainers.image.source=https://github.com/$GITHUB_REPOSITORY" -t "$IMAGE:$TAG" .
           docker run -d --name fleet-smoke -p 127.0.0.1:8000:8000 "$IMAGE:$TAG"
-          curl --fail --retry 15 --retry-connrefused --retry-delay 2 http://127.0.0.1:8000/health
-          docker stop fleet-smoke
+
+          trap 'docker logs fleet-smoke; docker rm -f fleet-smoke' EXIT
+
+          for attempt in $(seq 1 30); do
+            if curl --fail --silent --show-error --max-time 5 http://127.0.0.1:8000/health; then
+              echo "Container health check passed."
+              exit 0
+            fi
+            echo "Waiting for application startup: attempt $attempt/30"
+            sleep 2
+          done
+
+          echo "::error::Container failed its health check."
+          exit 1
       - uses: docker/login-action@v3
         with:
           registry: ghcr.io
