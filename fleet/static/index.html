@@ -287,5 +287,21 @@
       <p>Latest 100 trips across all regions in this published snapshot.</p>
       <div id="trip-content"></div>
     </dialog>
+    <button id="chat-toggle" class="chat-launch" aria-controls="fleet-chat" aria-expanded="false">✦ Ask Fleet Pulse</button>
+    <section id="fleet-chat" class="chat-panel" aria-label="Fleet analytics copilot" hidden>
+      <div class="chat-heading"><div><span class="eyebrow">FLEET ANALYTICS COPILOT</span><h2>Ask Fleet Pulse</h2></div><button id="chat-close" aria-label="Close chat">×</button></div>
+      <p class="chat-intro">Your fleet, explained. Local Meta Llama + verified analytics.<br>Synthetic data · Read-only · Full reporting period</p>
+      <div class="chat-suggestions">
+        <button type="button">Summarize the fleet</button>
+        <button type="button">Top vehicles by energy</button>
+        <button type="button">Compare fleet regions</button>
+        <button type="button">Show trips for EV-008</button>
+        <button type="button">How many records failed validation?</button>
+      </div>
+      <div id="chat-messages" class="chat-messages" role="log" aria-live="polite"></div>
+      <form id="chat-form"><label for="chat-input">Ask a complete question</label><div class="chat-compose"><input id="chat-input" minlength="3" maxlength="1000" required placeholder="Which vehicles have the most alerts?" autocomplete="off"><button id="chat-send" type="submit">Send ↗</button></div></form>
+      <p class="chat-footnote">No chat history is stored. Each question is independent.</p>
+    </section>
+    <script src="/static/chat.js" defer></script>
   </body>
 </html>

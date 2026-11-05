@@ -3,6 +3,9 @@ services:
     build: .
     image: fleet-pulse:local
     ports: ["127.0.0.1:8000:8000"]
+    environment:
+      OLLAMA_BASE_URL: http://ollama:11434
+      OLLAMA_MODEL: llama3.2:3b
     volumes: ["fleet-data:/data"]
   pipeline:
     build: .
@@ -10,6 +13,10 @@ services:
     profiles: [tools]
     volumes: ["fleet-data:/data"]
     command: ["sh", "-c", "if [ ! -f /data/generator_manifest.json ]; then python -m fleet.cli generate; fi && python -m fleet.cli run"]
+  ollama:
+    image: ollama/ollama:latest
+    profiles: [copilot]
+    volumes: ["ollama-models:/root/.ollama"]
   kafka:
     image: apache/kafka:3.9.0
     profiles: [kafka]
@@ -28,4 +35,5 @@ services:
       KAFKA_AUTO_CREATE_TOPICS_ENABLE: 'true'
       KAFKA_NUM_PARTITIONS: 3
 volumes:
+  ollama-models:
   fleet-data:

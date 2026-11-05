@@ -12,6 +12,7 @@ from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 from starlette.middleware.trustedhost import TrustedHostMiddleware
 
+from fleet import copilot
 from fleet.config import Paths
 
 STATIC = Path(__file__).parent / "static"
@@ -41,14 +42,17 @@ def rows(conn, sql, params=None):
 
 def create_app(paths: Paths | None = None):
     paths = paths or Paths.from_env()
-    app = FastAPI(title="Fleet Pulse · Vehicle Telemetry Analytics", version="0.1.0")
+    app = FastAPI(title="Fleet Pulse · Vehicle Telemetry Analytics", version="0.2.0")
     app.add_middleware(
         TrustedHostMiddleware, allowed_hosts=["localhost", "127.0.0.1", "testserver"]
     )
 
+    limiter = copilot.RateLimiter()
+
     @app.middleware("http")
     async def trace(request: Request, call_next):
         request_id, started = str(uuid4()), time.perf_counter()
+        request.state.request_id = request_id
         try:
             response = await call_next(request)
         except (OSError, duckdb.Error, ValueError):
@@ -168,6 +172,36 @@ def create_app(paths: Paths | None = None):
         if not result:
             raise HTTPException(404, "Vehicle not found in this snapshot.")
         return {"vehicle_id": vehicle_id, "trips": result}
+
+    @app.post("/api/chat", response_model=copilot.ChatResponse)
+    def chat(body: copilot.ChatRequest, request: Request):
+        limiter.check()
+        blocked = copilot.guardrail(body.message)
+        if blocked:
+            return copilot.ChatResponse(
+                answer=blocked,
+                mode="guardrail",
+                notice="Read-only fleet analytics",
+                intent=copilot.Intent(tool="unsupported"),
+                request_id=request.state.request_id,
+            )
+        current = snapshot(paths)
+        intent, mode = copilot.classify(body.message)
+        notice = (
+            "Meta Llama via local Ollama selected the tool. Numbers come from published data."
+            if mode == "llama"
+            else "Ollama unavailable or returned invalid output. Using a limited keyword fallback."
+        )
+        if intent.tool == "unsupported":
+            result = {
+                "answer": "Try a fleet summary, top vehicles by energy, region comparison, "
+                "trips for EV-008, or pipeline quality. Ask each question in full."
+            }
+        else:
+            result = copilot.answer(current, intent)
+        return copilot.ChatResponse(
+            **result, mode=mode, notice=notice, intent=intent, request_id=request.state.request_id
+        )
 
     @app.get("/", include_in_schema=False)
     def index():

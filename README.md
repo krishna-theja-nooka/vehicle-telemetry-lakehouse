@@ -205,3 +205,29 @@ See [extensions](docs/extensions.md) for runnable producer/consumer commands and
 If this project helps you understand telemetry pipelines or fleet analytics, consider giving it a GitHub star. Questions and constructive contributions are welcome.
 
 [GitHub setup: workflows, releases, packages and topics](docs/github-setup.md)
+
+## New in v0.2.0: Ask Fleet Pulse
+
+A read-only analytics copilot built into the dashboard. **Meta Llama 3.2 3B runs
+locally through Ollama** to choose an approved analytics tool. SQL templates and
+numerical answers remain application-controlled; no paid LLM API is needed.
+
+Ask “Top vehicles by energy”, “Compare fleet regions”, “Show trips for EV-008”,
+or “How many records failed validation?”. Answers include source tables, the
+published snapshot ID, the reporting period, and a request ID. All data is synthetic.
+
+Install [Ollama](https://ollama.com/download), run `ollama pull llama3.2:3b`, then
+start the dashboard as above. Click **Ask Fleet Pulse** in the bottom-right corner.
+If Ollama is unavailable, the app uses a clearly labelled, limited keyword fallback.
+The dashboard and deterministic analytics continue to work without a model.
+
+[Windows PowerShell setup, Docker instructions, API and security design](docs/copilot.md)
+
+The copilot answers independent questions over the full published reporting period.
+It does not diagnose mechanical failures, perform write actions, retain chat history,
+or support custom date ranges. See the copilot guide for scope and evaluation limits.
+
+![Ask Fleet Pulse showing real synthetic analytics in labelled fallback mode](screenshots/copilot.png)
+
+This screenshot demonstrates actual application output in **fallback mode**.
+Live Llama inference must be verified locally after installing Ollama and pulling the model.

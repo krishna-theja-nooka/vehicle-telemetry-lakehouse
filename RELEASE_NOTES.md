@@ -1,23 +1,19 @@
-## Fleet Pulse v0.1.0
+# Fleet Pulse v0.2.0 — Fleet Analytics Copilot
 
-Initial release of a synthetic EV telemetry lakehouse and interactive fleet analytics dashboard.
+Adds **Ask Fleet Pulse**, a responsive chat panel backed by local Meta Llama 3.2 3B
+through Ollama. No paid LLM API is needed.
 
-### Included
-- PySpark and real Delta Lake Bronze/Silver/Gold tables.
-- Batch and checkpointed file streaming; optional Kafka adapter.
-- Duplicate handling, event revisions, late corrections, quarantine and SCD2 vehicle history.
-- Seven dbt models and 32 data tests.
-- Region filters, energy charts, vehicle search, trip detail and CSV export.
-- Run reports, request IDs, immutable serving snapshots and atomic publication.
-- Docker, GitHub Actions and optional cloud integration examples.
+- Validated structured tool selection with parameterized, read-only analytics.
+- Fleet summaries, top-five rankings, regional comparisons, vehicle trips and quality counts.
+- Answers include snapshot, reporting period, sources and request ID.
+- Explicit deterministic fallback when Ollama is unavailable or returns invalid output.
+- Input validation, demo rate limits, bounded retries and safety refusals.
+- PowerShell instructions, optional Docker Ollama profile and API documentation.
 
-### Observed local validation
-- 17 pytest cases passed, including real Spark/Delta streaming integration.
-- 32 dbt tests passed.
-- Default dataset: 2,898 input lines, 2,895 unique Bronze payloads, five rejected records, 2,889 canonical events and 504 trips.
-- Desktop/mobile dashboard interactions tested against the running API.
+The existing Spark/Delta/dbt lakehouse is retained. All data remains synthetic.
+Tests exercise mocked Ollama responses and actual isolated DuckDB tools. Browser
+checks exercise real fallback behavior against the published synthetic snapshot.
+Live Llama inference and Docker Compose are not validated in the build environment.
+The GitHub release workflow separately builds and smoke-tests the application container.
 
-All data and outcomes are synthetic. Kafka and cloud deployment examples require environment-specific acceptance tests. The release workflow checks container process health, not a full pipeline inside Docker.
-
-### Downloads
-The source ZIP is the complete project. The Python wheel contains application code and UI resources; use the source project for dbt configuration and deployment files. The container is published to the repository's GitHub Container Registry package using the release version tag.
+Model weights are governed by Meta's own license and acceptable-use terms.
