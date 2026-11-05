@@ -15,7 +15,7 @@ git push -u origin main
 
 Replace `YOUR_USERNAME` with your GitHub account. The remote must exist and Git must be authenticated. The source ZIP excludes local `.git` metadata, so initialize it after extracting. The development workspace already has a local repository.
 
-Use the About text and topics from the README. Wait for GitHub Actions to pass before tagging `v0.1.0`. Suggested release title: **Fleet Pulse v0.1.0 — Vehicle Telemetry Lakehouse**.
+Use the About text and topics from the README. Wait for CI to pass, then run **Actions → Release and publish package → Run workflow**. It publishes the container and creates the version tag/release automatically. Do not create the same release manually first. See [GitHub setup](github-setup.md).
 
 Suggested release notes: initial synthetic telemetry generator, real Spark/Delta batch and streaming ingestion, revision handling, SCD2 fleet models, quarantine, dbt validation, immutable analytics snapshots, FastAPI dashboard, tests and optional deployment examples. Mention that optional cloud paths need environment-specific validation.
 

@@ -2,9 +2,36 @@
 
 # Vehicle Telemetry Lakehouse & Fleet Analytics
 
+[![CI](https://github.com/krishna-theja-nooka/vehicle-telemetry-lakehouse/actions/workflows/ci.yml/badge.svg)](https://github.com/krishna-theja-nooka/vehicle-telemetry-lakehouse/actions/workflows/ci.yml)
+[![Stars](https://img.shields.io/github/stars/krishna-theja-nooka/vehicle-telemetry-lakehouse?style=flat)](https://github.com/krishna-theja-nooka/vehicle-telemetry-lakehouse/stargazers)
+
+
 **Fleet Pulse** turns synthetic electric-vehicle signals into validated, traceable fleet analytics. A working local data engineering project with real **PySpark transformations, Delta transaction logs, checkpointed Structured Streaming, SCD Type 2 joins, dbt tests, and a responsive dashboard**.
 
 Built to demonstrate automotive data engineering and customer-facing analytics. All companies, vehicles, locations, routes, events, and operational outcomes in the demo are fictional. No employer/customer data or manufacturer integrations are used.
+
+## Actual application outputs
+
+These screenshots were captured from the running local application using the synthetic dataset. They show real application output, not design mockups or a cloud deployment.
+
+![Fleet dashboard with actual synthetic analytics](screenshots/overview.png)
+
+| Default demo result | Observed value |
+| --- | ---: |
+| Input records | 2,898 |
+| Unique Bronze payloads | 2,895 |
+| Quarantined records | 5 |
+| Canonical Silver events | 2,889 |
+| Vehicles / completed trips | 24 / 504 |
+| Distance | 26,069.69 km |
+| Trip energy | 5,600.784 kWh |
+| Recorded costs | $5,787.60 |
+
+![Vehicle trip drill-down](screenshots/vehicle-detail.png)
+
+![Pipeline quality output](screenshots/quality.png)
+
+[View the mobile dashboard](screenshots/mobile.png) · [Machine-readable run evidence](reports/sample-run.json) · [Validation details](docs/validation.md)
 
 ## The business question
 
@@ -172,3 +199,9 @@ See [extensions](docs/extensions.md) for runnable producer/consumer commands and
 **Topics:** `data-engineering`, `pyspark`, `delta-lake`, `lakehouse`, `vehicle-telemetry`, `fleet-analytics`, `dbt`, `kafka`, `databricks`, `fastapi`, `sql`.
 
 [Publishing instructions](docs/publishing.md) · [Contributing](CONTRIBUTING.md) · [MIT license](LICENSE)
+
+## Support the project
+
+If this project helps you understand telemetry pipelines or fleet analytics, consider giving it a GitHub star. Questions and constructive contributions are welcome.
+
+[GitHub setup: workflows, releases, packages and topics](docs/github-setup.md)
